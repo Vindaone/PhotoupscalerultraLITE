@@ -26,12 +26,13 @@
     <button id="upscaleButton">Upscale Image</button>
     <br><br>
     <div id="processingMessage" style="display: none;">Processing... Please wait.</div>
-    <a id="downloadLink" style="display: none;">Download Upscaled Image</a>
-
+    <h3>Upscaled Image:</h3>
+    <img id="upscaledImage" style="display: none; max-width: 100%; height: auto;" />
+    
     <script>
         const upscaleButton = document.getElementById('upscaleButton');
         const processingMessage = document.getElementById('processingMessage');
-        const downloadLink = document.getElementById('downloadLink');
+        const upscaledImage = document.getElementById('upscaledImage');
 
         upscaleButton.addEventListener('click', async () => {
             const fileInput = document.getElementById('fileInput');
@@ -61,13 +62,12 @@
                     });
 
                     const result = await response.json();
+                    console.log(result); // Log the result to check the output
                     const upscaledImageUrl = result.output_url;
 
-                    // Create a download link
-                    downloadLink.href = upscaledImageUrl;
-                    downloadLink.download = 'upscaled_image.png';
-                    downloadLink.style.display = 'block';
-                    downloadLink.textContent = 'Download Upscaled Image';
+                    // Display the upscaled image
+                    upscaledImage.src = upscaledImageUrl;
+                    upscaledImage.style.display = 'block'; // Show the image
                 } catch (error) {
                     console.error("Error during image processing:", error);
                 } finally {
